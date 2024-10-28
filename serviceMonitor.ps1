@@ -1,5 +1,11 @@
 $logFile = "serviceMonitor.log"
-
+# Clear the log file if it exists
+if (Test-Path $logFile) {
+    Clear-Content -Path $logFile
+} else {
+    # Create the log file if it does not exist
+    New-Item -Path $logFile -ItemType File -Force | Out-Null
+}
 
 <#
 .SYNOPSIS
