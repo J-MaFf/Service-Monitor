@@ -1,5 +1,24 @@
 $logFile = "serviceMonitor.log"
 
+
+<#
+.SYNOPSIS
+    Writes a message to a log file with a timestamp.
+
+.DESCRIPTION
+    The Write-Message function takes a string message as input, appends a timestamp to it, 
+    and writes the resulting log entry to a specified log file.
+
+.PARAMETER message
+    The message to be logged.
+
+.EXAMPLE
+    Write-Message -message "Service started successfully"
+    This will log an entry like "2023-03-15 14:23:45 - Service started successfully" to the log file.
+
+.NOTES
+    Ensure that the variable $logFile is defined and points to a valid file path before calling this function.
+#>
 function Write-Message {
     param (
         [string]$message
