@@ -40,7 +40,7 @@ Write-Message "Initial status of WSearch service: $($service.Status)"
 # Main loop
 while ($true) {
     $service = Get-Service -Name "WSearch"
-    if ($service.Status -eq "Stopping") { # If the service is stopping
+    if (-not $service.Status -eq "Running") { # If the service is not running
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
         $message = "$timestamp - WSearch service is stopping. Attempting to restart..."
         Write-Host $message    # Write to console
