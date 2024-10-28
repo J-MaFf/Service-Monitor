@@ -87,5 +87,5 @@ while ($true) {
     }
 
     # Sleep for a while before checking again
-    Start-Sleep -Seconds 10
+    Start-Sleep -Seconds 60
 }
