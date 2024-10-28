@@ -28,21 +28,28 @@ function Write-Message {
     Add-Content -Path $logFile -Value $logEntry
 }
 
+# Counter variables
 $restartCounter = 0
 $restartFailCounter = 0
+
+# First time check
+$service = Get-Service -Name "WSearch"
+Write-Host "Initial status of WSearch service: $($service.Status)"
+Write-Message "Initial status of WSearch service: $($service.Status)"
+
+# Main loop
 while ($true) {
     $service = Get-Service -Name "WSearch"
-    if ($service.Status -eq "Stopping") {
+    if ($service.Status -eq "Stopping") { # If the service is stopping
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
         $message = "$timestamp - WSearch service is stopping. Attempting to restart..."
         Write-Host $message    # Write to console
         Write-Message $message # Write to log file
 
-        try {
-            # Attempt a graceful restart
+        try { # Attempt a graceful restart
             Restart-Service -Name "WSearch" -Force -ErrorAction Stop
         }
-        catch {
+        catch { # If the graceful restart fails
             $message = "Graceful restart failed. Forcefully stopping and restarting..."
             Write-Host $message
             Write-Message $message
@@ -56,12 +63,12 @@ while ($true) {
 
         # Verify the service is running
         $service = Get-Service -Name "WSearch"
-        if ($service.Status -eq "Running") {
+        if ($service.Status -eq "Running") { # If the service is running
             $restartCounter++
             $message = "WSearch service restarted successfully. This was sucessful restart # $restartCounter."
             Write-Host $message
             Write-Message $message
-        } else {
+        } else { # If the service is not running
             $restartFailCounter++
             $message = "WSearch service failed to restart. This was failed restart # $restartFailCounter."
             Write-Host $message
