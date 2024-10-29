@@ -46,6 +46,9 @@ Write-Message "Initial status of WSearch service: $($service.Status)"
 
 # Main loop
 while ($true) {
+    # Send message to event log
+    Write-EventLog -LogName Application -Source "Service Monitor" -EntryType Information -EventID 2 -Message "Service Monitor running."
+
     $service = Get-Service -Name "WSearch"
     if ($service.Status -ne "Running") { # If the service is not running
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
