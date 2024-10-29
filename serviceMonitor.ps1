@@ -1,4 +1,11 @@
-$logFile = "serviceMonitor.log"
+$logDirectory = "C:\Users\admin-jmaffiola\Desktop\Scripts\Service-Monitor"
+$logFile = Join-Path -Path $logDirectory -ChildPath "serviceMonitor.log"
+
+# Ensure the directory exists
+if (-not (Test-Path $logDirectory)) {
+    New-Item -Path $logDirectory -ItemType Directory -Force | Out-Null
+}
+
 # Clear the log file if it exists
 if (Test-Path $logFile) {
     Clear-Content -Path $logFile
