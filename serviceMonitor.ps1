@@ -39,6 +39,7 @@ $restartCounter = 0
 $restartFailCounter = 0
 
 # First time check
+Write-EventLog -LogName Application -Source "Service Monitor" -EntryType Information -EventID 1 -Message "Service Monitor started."
 $service = Get-Service -Name "WSearch"
 Write-Host "Initial status of WSearch service: $($service.Status)"
 Write-Message "Initial status of WSearch service: $($service.Status)"
